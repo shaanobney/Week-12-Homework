@@ -45,11 +45,11 @@ figlet.text('Welcome To Bamazon', {
 connection.connect(function(err) {
     if (err) throw err;
     console.log("Your lucky lotto number is ".rainbow + connection.threadId);
-    start();
+    bamApp();
 });
 
 // GRABS INFO FROM PRODUCT TABLE, PRINTS APPLICABLE FIELDS FOR CUSTOMERS TO VIEW
-var start = function() {
+var bamApp = function() {
     connection.query('SELECT * FROM Products', function(err, res) {
         var table = new Table({
             head: ['Item ID', 'Product Name', 'PRICE', 'QTY'],
@@ -108,7 +108,7 @@ var buyItem = function() {
             if (data[0].StockQuantity < ItemInt) {
                 console.log("This product is currently out of stock\n".red);
                 console.log("Please choose another product\n".green);
-                start();
+                bamApp();
             } else {
                 var updateQty = data[0].StockQuantity - ItemInt;
                 var totalPrice = data[0].Price * ItemInt;
@@ -123,7 +123,7 @@ var buyItem = function() {
                             message: "Would you like to buy something else?".magenta,
                         }).then(function(answer) {
                             if (answer.buyMore === true) {
-                                start();
+                                bamApp();
                             } else {
                                 console.log("Please come again!".green);
                                 console.log("NO REFUNDS ".bgRed);

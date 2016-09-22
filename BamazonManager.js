@@ -43,11 +43,11 @@ figlet.text('Bamazon Manager', {
 connection.connect(function(err) {
     if (err) throw err;
     console.log("Your lucky lotto number is ".rainbow + connection.threadId);
-    appStart();
+    appBam();
 });
 
 //MENU FOR MANAGEMEN TYPES
-var appStart = function() {
+var appBam = function() {
     inquirer.prompt([{
         name: "Menu",
         type: "rawlist",
@@ -56,7 +56,7 @@ var appStart = function() {
     }]).then(function(answer) {
         switch(answer.Menu) {
             case 'View Products for Sale': 
-            productsForSale();
+            currentInventory();
             break;
             case 'View Low Inventory':
             lowInventory();
@@ -78,7 +78,7 @@ var appStart = function() {
             message: "Would you like to go back to the main menu?",
         }).then(function(answer) {
             if (answer.continue == true) {
-                appStart();
+                appBam();
             } else {
                 console.log("GOODBYE!");
                 connection.end();
@@ -87,7 +87,7 @@ var appStart = function() {
     };
 
     //LITS CURRENT INVENTORY
-    function productsForSale() {
+    function currentInventory() {
         figlet.text('Current Inventory', {
             font: 'Small Slant',
             horizontalLayout: 'fitted',
@@ -105,7 +105,7 @@ var appStart = function() {
                 table.push(productArray);
             }
             console.log(table.toString());
-            appStart();
+            appBam();
         });
     }
     //SHOWS INVENTORY WITH QTY UNDER FIVE
@@ -129,7 +129,7 @@ var appStart = function() {
                 }
             }
             console.log(table.toString());
-            appStart();
+            appBam();
         });
     }
     //UPDATES QTY OF INVENTORY ITEMS
